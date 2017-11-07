@@ -40,7 +40,7 @@ public class RastreadorHistorico implements Serializable{
     private Double corrente;
     
     @Column(name = "posicao")
-    private Integer posicao;
+    private Integer posicao;  
 
     public Integer getId() {
         return id;

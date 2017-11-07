@@ -1,16 +1,14 @@
 package com.apolo.webapp.controller;
 
+import com.apolo.webapp.ejb.RastreadorFacadeLocal;
 import com.apolo.webapp.ejb.RastreadorHistoricoFacadeLocal;
 import com.apolo.webapp.model.Rastreador;
 import com.apolo.webapp.model.RastreadorHistorico;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -33,18 +31,48 @@ import org.primefaces.model.chart.LineChartModel;
  * @author raybm
  */
 @ManagedBean(name = "RastreadorHistoricoController")
-@SessionScoped
+@ViewScoped
 public class RastreadorHistoricoController implements Serializable{
     @EJB
     private RastreadorHistoricoFacadeLocal rastreadorHistoricoEJB;
-     
+    
+    @EJB
+    private RastreadorFacadeLocal rastreadorEJB;
     private List<RastreadorHistorico> listaRastreadorHistorico = null;
     
     private LineChartModel lineModelGeracao = null;
     
+    @Inject
+    private RastreadorHistorico rastreadorHistorico;
+    
     private Date dataInicial; 
     private Date dataFinal;
     private Integer idRastreador;
+    private String key;
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+    
+    public Integer getIdRastreador() {
+        return idRastreador;
+    }
+
+    public void setIdRastreador(Integer idRastreador) {
+        this.idRastreador = idRastreador;
+    }
+    
+    public RastreadorHistorico getRastreadorHistorico() {
+        return rastreadorHistorico;
+    }
+
+    public void setRastreadorHistorico(RastreadorHistorico rastreadorHistorico) {
+        this.rastreadorHistorico = rastreadorHistorico;
+    }
 
     public Date getDataInicial() {
         return dataInicial;
@@ -127,5 +155,16 @@ public class RastreadorHistoricoController implements Serializable{
          
         return model;
     }
-              
+
+    public void gravar() throws Exception{
+        Rastreador r = null; 
+        r = rastreadorEJB.findKey(key);
+        if(r != null){
+            rastreadorHistorico.setIdRastreador(r);
+            rastreadorHistorico.setDataHora(Calendar.getInstance().getTime());
+            if(rastreadorHistorico.getIdRastreador() != null)
+                rastreadorHistoricoEJB.create(rastreadorHistorico);
+        }    
+    } 
+     
 }

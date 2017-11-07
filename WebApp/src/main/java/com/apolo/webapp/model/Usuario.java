@@ -3,22 +3,18 @@ package com.apolo.webapp.model;
 import com.apolo.webapp.ejb.SQLInjectionSafe;
 import com.apolo.webapp.util.Criptografia;
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.HashSet;
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -44,11 +40,8 @@ public class Usuario implements Serializable{
     @Column(name="tipo", nullable=false)
     private String tipo;
     
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "usuariorastreador", 
-            joinColumns = @JoinColumn(name = "idusuario", referencedColumnName = "id"), 
-            inverseJoinColumns = @JoinColumn(name = "idrastreador", referencedColumnName = "id"))
-    private Set<Rastreador> rastreadores;
+    @OneToMany(mappedBy = "id.usuario")
+    private Collection<UsuarioRastreador> usuarioRastreadorList;
     
     public Pessoa getId() {
         return id;
@@ -72,7 +65,7 @@ public class Usuario implements Serializable{
 
     public void setSenha(String senha) {
         try {
-            this.senha = Criptografia.criptografar(senha).toString();
+            this.senha = Criptografia.criptografarSHA1(senha).toString();
         } catch (Exception ex) {
             Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -86,12 +79,12 @@ public class Usuario implements Serializable{
         this.tipo = tipo;
     }
 
-    public Set<Rastreador> getRastreadores() {
-        return rastreadores;
+    public Collection<UsuarioRastreador> getRastreadores() {
+        return usuarioRastreadorList;
     }
 
-    public void setRastreadores(Set<Rastreador> rastreadores) {
-        this.rastreadores = rastreadores;
+    public void setRastreadores(Collection<UsuarioRastreador> usuarioRastreadorList) {
+        this.usuarioRastreadorList = usuarioRastreadorList;
     }
 
     @Override
