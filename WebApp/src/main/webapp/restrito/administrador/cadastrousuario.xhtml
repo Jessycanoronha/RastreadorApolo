@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/templates/modelo.xhtml">
+
+            <ui:define name="content">
+                       <h:form>
+                            <p:messages id="mensagem" autoUpdate="false" severity="info, fatal" closable="true" showDetail="true" />
+
+                            <p:fieldset legend="Dados Pessoais">
+                                <h:panelGrid columns="3" id="pgDados">
+
+                                    <p:outputLabel for="txtNome" value="Nome"/>
+                                    <p:inputText id="txtNome" value="#{UsuarioController.pessoa.nome}" required="true" />
+                                    <p:message for="txtNome"/>
+
+                                    <p:outputLabel for="txtSobrenome" value="Sobrenome"/>
+                                    <p:inputText id="txtSobrenome" value="#{UsuarioController.pessoa.sobrenome}" required="true" />
+                                    <p:message for="txtSobrenome"/>
+
+                                    <p:outputLabel for="rdbSexo" value="Sexo"/>
+                                    <p:selectOneRadio id="rdbSexo" value="#{UsuarioController.pessoa.sexo}" required="true" >
+                                        <f:selectItem itemValue="M" itemLabel="Masculino"/>
+                                        <f:selectItem itemValue="F" itemLabel="Feminino"/>
+                                    </p:selectOneRadio>
+                                    <p:message for="rdbSexo" />
+
+                                        <p:outputLabel for="txtDataNascimento" value="Data Nascimento"/>
+                                        <p:calendar id="txtDataNascimento" locale="pt_BR"	
+                                                showOn="button"
+                                                pattern="dd/MM/yyyy"
+                                                value="#{UsuarioController.pessoa.dataNascimento}" required="true"/>
+                                        <p:message for="txtDataNascimento"/>
+                                </h:panelGrid>
+                            </p:fieldset>
+                            <p:fieldset legend="Dados da Conta">
+                                <h:panelGrid columns="3" id="pgConta">
+                                    <p:outputLabel for="cboTipo" value="Tipo"/>
+                                    <p:selectOneMenu id="cboTipo" value="#{UsuarioController.usuario.tipo}" required="true" requiredMessage="Campo requerido">
+                                        <f:selectItem itemValue="A" itemLabel="Administrador"/>
+                                        <f:selectItem itemValue="U" itemLabel="Usuário"/>                  
+                                    </p:selectOneMenu>
+                                    <p:message for="cboTipo"/>
+
+                                    <p:outputLabel for="txtEmail" value="Email"/>
+                                    <p:inputText id="txtEmail" value="#{UsuarioController.usuario.email}" 
+                                           required="true" requiredMessage="Campo requerido"
+                                           validatorMessage="Email com Formato Invalido">
+                                        <f:validateRegex pattern=
+                                                         "^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                    </p:inputText>    
+                                    <p:message for="txtEmail"/>
+
+                                    <p:outputLabel for="senha1" value="Senha"/>
+                                    <p:password id="senha1" value="#{UsuarioController.usuario.senha}" required="true" 
+                                                validatorMessage="As senhas não coincidem." requiredMessage="Campo requerido"
+                                                weakLabel="Muito Fraca" strongLabel="Forte" goodLabel="Boa"
+                                                match="senha2" feedback="true" promptLabel="Digite uma senha"/>
+                                    <p:message for="senha1"/>
+
+                                    <p:outputLabel for="senha2" value="Repetir Senha"/>
+                                    <p:password id="senha2" required="true" requiredMessage="Campo requerido"/>
+                                    <p:message for="senha2"/>
+
+                                </h:panelGrid>   
+                                <p:commandButton icon="ui-icon-check" value="Cadastrar" update="pgDados, pgConta, mensagem" actionListener="#{UsuarioController.registrar()}"/>
+                            </p:fieldset>
+                        </h:form>
+                        <h:outputScript library="js" name="portuguesBRLocale.js" />
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

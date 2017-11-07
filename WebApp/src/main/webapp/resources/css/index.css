@@ -1,0 +1,14 @@
+/* 
+    Created on : 29/10/2017, 14:29:50
+    Author     : raybm
+*/
+#principal{
+    width: 1024px;
+    margin: 0 auto;
+}
+
+#quadro{
+    margin: 100px auto;
+    width: 40%;
+    text-align: center;
+}

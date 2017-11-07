@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/templates/modelo.xhtml">
+
+            <ui:define name="content">
+                 <h:form id="formGrafico">
+                    <div align="center" >
+                     <p:panelGrid columns="7" class="transparentBackground" style="margin: 0 auto; text-align: center;">
+                        <p:outputLabel for="txtDataInicio" value="Data Inicio"/>
+                        <p:calendar id="txtDataInicio" locale="pt_BR"	
+                                showOn="button"
+                                pattern="dd/MM/yyyy"
+                                value="#{RastreadorHistoricoController.dataInicial}" required="true"/>
+                        <p:message for="txtDataInicio"/>
+                        <p:outputLabel for="txtDataFinal" value="Data Final"/>
+                        <p:calendar id="txtDataFinal" locale="pt_BR"	
+                                showOn="button"
+                                pattern="dd/MM/yyyy"
+                                value="#{RastreadorHistoricoController.dataFinal}" required="true"/>
+                        <p:message for="txtDataFinal"/>
+                   </p:panelGrid>
+                   <p:poll interval="3" update="chart" /> 
+                   <p:chart type="line" model="#{RastreadorHistoricoController.lineModelGeracao}" style="width:500px;height:300px" id="chart" rendered="#{RastreadorHistoricoController.lineModelGeracao != null}"/>
+                </div>  
+                     <p:commandButton id="btnTeste" actionListener="#{RastreadorHistoricoController.gerarRelatorio()}" />
+                </h:form>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

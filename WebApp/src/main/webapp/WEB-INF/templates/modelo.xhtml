@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+   <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Facelets Template</title>
+        <f:event type="preRenderView" listener="#{ModeloController.verificarSessao()}"/>
+        <h:outputStylesheet library="css" name="cssLayout.css"/>
+    </h:head>
+
+    <h:body>
+
+        <div id="top" class="top">
+            <ui:insert name="top">
+                <h:form>
+                    <p:menubar model="#{MenuController.model}">
+                         <f:facet  name="options" >
+                             <div class = "boxCointainer">
+                                 <div id="divUsuario" class="box">    
+                                     <p:outputLabel value="#{MenuController.saudacao} #{MenuController.usuarioLogado.id.nome}" />
+                                </div>
+                                 <div class="box" style=" width: 40px;">
+                                    <p:commandButton actionListener="#{MenuController.fecharSessao()}" icon="ui-icon-power" title="Encerrar" action="/index?faces-redirect=true"/>
+                                </div>
+                            </div> 
+                        </f:facet>
+                    </p:menubar>    
+                </h:form>
+            </ui:insert>
+        </div>
+
+        <div id="content" class="center_content">
+            <ui:insert name="content">Content</ui:insert>
+        </div>
+        
+        <div id="bottom" style="text-align: center">
+            <ui:insert name="bottom">
+                <p>Apolo Rastreador Solar 2017</p>
+                <p>TCC - Sistemas de Informação</p>
+            </ui:insert>
+        </div>
+
+    </h:body>
+</html>
