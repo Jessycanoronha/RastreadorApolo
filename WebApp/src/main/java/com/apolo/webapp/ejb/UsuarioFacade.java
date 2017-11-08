@@ -1,12 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.apolo.webapp.ejb;
 
 import com.apolo.webapp.model.Usuario;
-import com.apolo.webapp.util.OpcoesLog;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -32,6 +26,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
         super(Usuario.class);
     }
     
+    @Override
     public boolean existeUsuario(Usuario u){
         Usuario usuario = null;
         String consulta;
@@ -46,10 +41,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
         } catch (Exception e) {
               throw e;
         }
-        if(usuario == null)
-            return false;
-        else
-            return true;
+        return usuario != null;
     }
     
     @Override

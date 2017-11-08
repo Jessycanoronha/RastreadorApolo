@@ -2,6 +2,7 @@ package com.apolo.webapp.model;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
@@ -10,13 +11,15 @@ import javax.persistence.ManyToOne;
  *
  * @author raybm
  */
-@Embeddable
+/*@Embeddable
 public class UsuarioRastreadorId implements Serializable {
 
   @ManyToOne(fetch = FetchType.LAZY)
+  @Column(name="idrastreador")
   private Rastreador rastreador;
 
   @ManyToOne(fetch = FetchType.LAZY)
+  @Column(name="id")
   private Usuario usuario;
 
     public Rastreador getRastreador() {
@@ -71,4 +74,4 @@ public class UsuarioRastreadorId implements Serializable {
 
   
     
-}
+}*/

@@ -25,5 +25,5 @@ public interface RastreadorFacadeLocal {
 
     int count();
     
-    Rastreador findKey(String key);   
+    Rastreador findChave(String chave);
 }

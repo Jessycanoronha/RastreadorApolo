@@ -20,6 +20,7 @@ import javax.inject.Inject;
 public class IndexController implements Serializable{
     @EJB
     private UsuarioFacadeLocal EJBUsuario;
+    
     @Inject
     private Usuario usuario; 
     

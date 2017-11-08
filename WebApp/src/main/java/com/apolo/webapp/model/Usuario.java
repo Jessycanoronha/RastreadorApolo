@@ -3,7 +3,6 @@ package com.apolo.webapp.model;
 import com.apolo.webapp.ejb.SQLInjectionSafe;
 import com.apolo.webapp.util.Criptografia;
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.logging.Level;
@@ -14,7 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -40,8 +39,20 @@ public class Usuario implements Serializable{
     @Column(name="tipo", nullable=false)
     private String tipo;
     
-    @OneToMany(mappedBy = "id.usuario")
-    private Collection<UsuarioRastreador> usuarioRastreadorList;
+    @ManyToMany
+    @JoinTable(name="usuariorastreador",
+        joinColumns=
+            @JoinColumn(name="idusuario", referencedColumnName="id"),
+        inverseJoinColumns=
+            @JoinColumn(name="idrastreador", referencedColumnName="idrastreador")
+        )
+    public List<Rastreador> rastreadores;
+    
+    public List<Rastreador> getRastreadores() { return rastreadores; }
+
+    public void setRastreadores(List<Rastreador> rastreadores) {
+        this.rastreadores = rastreadores;
+    }
     
     public Pessoa getId() {
         return id;
@@ -65,7 +76,7 @@ public class Usuario implements Serializable{
 
     public void setSenha(String senha) {
         try {
-            this.senha = Criptografia.criptografarSHA1(senha).toString();
+            this.senha = Criptografia.criptografarSHA1(senha);
         } catch (Exception ex) {
             Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -77,14 +88,6 @@ public class Usuario implements Serializable{
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
-    }
-
-    public Collection<UsuarioRastreador> getRastreadores() {
-        return usuarioRastreadorList;
-    }
-
-    public void setRastreadores(Collection<UsuarioRastreador> usuarioRastreadorList) {
-        this.usuarioRastreadorList = usuarioRastreadorList;
     }
 
     @Override

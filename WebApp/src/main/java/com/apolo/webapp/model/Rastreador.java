@@ -1,17 +1,14 @@
 package com.apolo.webapp.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -38,28 +35,34 @@ public class Rastreador implements Serializable{
     @Column(name="potenciapaineis")
     private double potenciapaineis;  
 
-    @OneToMany(mappedBy = "id.rastreador")
-    private Collection<UsuarioRastreador> usuarioRastreadorList;
-      
-    @Column(name = "key")
-    private String key;
+    @ManyToMany(mappedBy="rastreadores")
+    private List<Usuario> usuarios;
 
-    public String getKey() {
-        return key;
+    public void setUsuarios(List<Usuario> usuarios) {
+        this.usuarios = usuarios;
+    }
+        
+    public List<Usuario> getUsuarios() { return usuarios; }
+    
+    @Column(name = "chave")
+    private String chave;
+
+    public String getChave() {
+        return chave;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setChave(String chave) {
+        this.chave = chave;
     }
     
-    public Collection<UsuarioRastreador> getUsuarios() {
+/*    public Collection<UsuarioRastreador> getUsuarios() {
         return usuarioRastreadorList;
     }
 
     public void setUsuarios(Collection<UsuarioRastreador> usuarioRastreadorList) {
         this.usuarioRastreadorList = usuarioRastreadorList;
     }
-    
+  */  
     
     public Integer getIdrastreador() {
         return idrastreador;

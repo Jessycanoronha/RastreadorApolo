@@ -15,7 +15,7 @@ import javax.persistence.TemporalType;
  *
  * @author raybm
  */
-@Entity
+/*@Entity
 @Table(name="usuariorastreador")
 public class UsuarioRastreador implements Serializable{
     @EmbeddedId
@@ -72,4 +72,4 @@ public class UsuarioRastreador implements Serializable{
     }
     
     
-}
+}*/

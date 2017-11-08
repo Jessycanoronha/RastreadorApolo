@@ -11,15 +11,9 @@ import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.CategoryAxis;
@@ -157,8 +151,8 @@ public class RastreadorHistoricoController implements Serializable{
     }
 
     public void gravar() throws Exception{
-        Rastreador r = null; 
-        r = rastreadorEJB.findKey(key);
+        Rastreador r = null;
+        r = rastreadorEJB.findChave(key);
         if(r != null){
             rastreadorHistorico.setIdRastreador(r);
             rastreadorHistorico.setDataHora(Calendar.getInstance().getTime());

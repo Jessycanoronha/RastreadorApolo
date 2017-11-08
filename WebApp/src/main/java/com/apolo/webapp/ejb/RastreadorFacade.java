@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.apolo.webapp.ejb;
 
 import com.apolo.webapp.model.Rastreador;
@@ -31,14 +26,13 @@ public class RastreadorFacade extends AbstractFacade<Rastreador> implements Rast
         super(Rastreador.class);
     }
     
-    @Override
-    public Rastreador findKey(String key){
+    public Rastreador findChave(String chave){
         String consulta;
         Rastreador r = null;
         try {
-            consulta = "From Rastreador r WHERE r.key = ?1";  
+            consulta = "From Rastreador r WHERE r.chave = ?1";  
             Query query = em.createQuery(consulta);
-            query.setParameter(1, key);
+            query.setParameter(1, chave);
             List<Rastreador> lista = query.getResultList();
             if(!lista.isEmpty()){
                 r = lista.get(0);
